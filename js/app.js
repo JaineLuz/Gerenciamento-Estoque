@@ -7,7 +7,7 @@ import { auth } from "./auth.js";
 
 const app = express();
 
-app.use(router);
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -97,6 +97,8 @@ app.use((req, res, next) => {
   res.locals.usuario = req.session.usuario || null; // Disponibiliza o usuário em todas as views
   next();
 });
+
+app.use(router);
 
 app.listen(3000, () => {
   console.log('Servidor rodando na porta 3000');

@@ -121,6 +121,53 @@
         const vendas = [];
         let vendaEditando = null;
 
+        // Abre o modal para adicionar nova venda
+        function abrirAdicionarVenda() {
+            const novoProduto = document.getElementById("novoProduto");
+            const novaQuantidade = document.getElementById("novaQuantidade");
+            const novoValorUnitario = document.getElementById("novoValorUnitario");
+            const novoValorDespesas = document.getElementById("novoValorDespesas");
+            const dataNovaVenda = document.getElementById("dataNovaVenda");
+
+            if (!novoProduto || !novaQuantidade || !novoValorUnitario || !novoValorDespesas || !dataNovaVenda) {
+                console.error("Um ou mais elementos do modal 'Adicionar Venda' não foram encontrados.");
+                return;
+            }
+
+            novoProduto.value = "";
+            novaQuantidade.value = "";
+            novoValorUnitario.value = "";
+            novoValorDespesas.value = "";
+            dataNovaVenda.value = "";
+
+            const modal = new bootstrap.Modal(document.getElementById("modal-adicionar"));
+            modal.show();
+        }
+
+
+        // Salva nova venda
+        function salvarNovaVenda() {
+            const novaVenda = {
+                id: vendas.length + 1,
+                produto: document.getElementById("novoProduto").value,
+                quantidade: parseInt(document.getElementById("novaQuantidade").value),
+                valorUnitario: parseFloat(document.getElementById("novoValorUnitario").value),
+                valorDespesas: parseFloat(document.getElementById("novoValorDespesas").value),
+                dataVenda: new Date(document.getElementById("dataNovaVenda").value),
+            };
+
+            vendas.push(novaVenda);
+            carregarVendas();
+            bootstrap.Modal.getInstance(document.getElementById("modal-adicionar")).hide();
+        }
+
+        // Redirecionar para estoque.html
+        document.getElementById('estoque').addEventListener('click', () => {
+            window.location.href = '/estoque';
+        });
+
+        window.onload = carregarVendas;
+
         // Função para calcular faturamento e lucro
         function calcularFaturamentoLucro(venda) {
             const faturamento = venda.quantidade * venda.valorUnitario;
@@ -233,52 +280,7 @@
             }
         }
 
-        // Abre o modal para adicionar nova venda
-        function abrirAdicionarVenda() {
-            const novoProduto = document.getElementById("novoProduto");
-            const novaQuantidade = document.getElementById("novaQuantidade");
-            const novoValorUnitario = document.getElementById("novoValorUnitario");
-            const novoValorDespesas = document.getElementById("novoValorDespesas");
-            const dataNovaVenda = document.getElementById("dataNovaVenda");
 
-            if (!novoProduto || !novaQuantidade || !novoValorUnitario || !novoValorDespesas || !dataNovaVenda) {
-                console.error("Um ou mais elementos do modal 'Adicionar Venda' não foram encontrados.");
-                return;
-            }
-
-            novoProduto.value = "";
-            novaQuantidade.value = "";
-            novoValorUnitario.value = "";
-            novoValorDespesas.value = "";
-            dataNovaVenda.value = "";
-
-            const modal = new bootstrap.Modal(document.getElementById("modal-adicionar"));
-            modal.show();
-        }
-
-
-        // Salva nova venda
-        function salvarNovaVenda() {
-            const novaVenda = {
-                id: vendas.length + 1,
-                produto: document.getElementById("novoProduto").value,
-                quantidade: parseInt(document.getElementById("novaQuantidade").value),
-                valorUnitario: parseFloat(document.getElementById("novoValorUnitario").value),
-                valorDespesas: parseFloat(document.getElementById("novoValorDespesas").value),
-                dataVenda: new Date(document.getElementById("dataNovaVenda").value),
-            };
-
-            vendas.push(novaVenda);
-            carregarVendas();
-            bootstrap.Modal.getInstance(document.getElementById("modal-adicionar")).hide();
-        }
-
-        // Redirecionar para estoque.html
-        document.getElementById('estoque').addEventListener('click', () => {
-            window.location.href = '/estoque';
-        });
-
-        window.onload = carregarVendas;
     </script>
 </body>
 

@@ -4,7 +4,7 @@ import SuperUsuarioModel from "../models/SuperUsuarioModel.js";
 class AutenticacaoController {
 
     async index(req, res) {
-        res.sendFile("login.html", { root: process.cwd() });
+        res.sendFile("/public/js/views/login.html", { root: process.cwd() });
     }
 
     async erro(req, res) {
@@ -31,6 +31,7 @@ class AutenticacaoController {
             req.session.logado = false;
             return res.redirect("/erro");
         }
+
         req.session.logado = true;
         res.redirect("/estoque");
     }

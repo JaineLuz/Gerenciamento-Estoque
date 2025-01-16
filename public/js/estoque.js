@@ -3,6 +3,11 @@ button.addEventListener('click', () => {
     window.location.href = 'public/js/views/vendas.html'; // Redireciona para a nova rota
 });
 
+const button2 = document.getElementById('cadastrarUsuarios');
+button2.addEventListener('click', () => {
+    window.location.href = '/cadastrar'; // Redireciona para a nova rota
+});
+
 //Adicionar produto
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('#form-produto');

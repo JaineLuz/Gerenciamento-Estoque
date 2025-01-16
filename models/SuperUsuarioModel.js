@@ -6,6 +6,7 @@ class SuperUsuarioModel {
   async find() {
     try {
       const usuarios = await prisma.superUsuario.findMany();
+      console.log('Usuários encontrados no banco:', usuarios);
       return usuarios;
     } catch (error) {
       console.error('Erro ao buscar usuarios: ', error);

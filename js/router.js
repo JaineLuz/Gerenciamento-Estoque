@@ -24,6 +24,10 @@ router.get('/vendas', (req, res) => {
     res.sendFile(path.resolve('public/js/views/vendas.html'), { root: '' });
 })
 
+/*router.get('/login', (req, res) => {
+    res.sendFile(path.resolve('public/js/views/login.html'), { root: '' });
+});*/
+
 // Rota para listar todos os produtos
 router.get('/produtos', ProdutoController.index);
 
@@ -117,10 +121,8 @@ router.get('/login', AutenticacaoController.index);
 
 router.post('/login', AutenticacaoController.login);
 
-
 //router.get('/estoque', auth, AutenticacaoController.home);
 
 router.get('/erro', AutenticacaoController.erro);
-
 
 export default router;

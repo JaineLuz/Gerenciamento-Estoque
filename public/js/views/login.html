@@ -7,54 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
     <title>Login</title>
-    <style>
-        body {
-            background-image: linear-gradient(45deg, blue, white);
-            /* Azul escuro */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            color: #fff;
-        }
-
-        .login-container {
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            color: #000;
-        }
-
-        .login-container h2 {
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: #1e3a8a;
-        }
-
-        .btn-primary {
-            background-color: #1e3a8a;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background-color: #162d65;
-        }
-
-        .form-text {
-            color: #6c757d;
-        }
-
-        .register-link {
-            margin-top: 15px;
-            display: block;
-        }
-    </style>
+    <link rel="stylesheet" href="public/js/css/style.css">
 </head>
 
 <body>
@@ -77,8 +30,7 @@
             </div>
             <button id="entrar" type="submit" class="btn btn-primary btn-block">Entrar</button>
         </form>
-        <a href="/cadastrar" class="register-link">Não tem uma conta?
-            <strong>Cadastre-se</strong></a>
+
     </div>
 
     <script>
@@ -156,22 +108,22 @@
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({ email, senha }),// Enviando os dados de login
-                    });
 
+                    });
+                    console.log("Resposta do servidor:", response);
                     const data = await response.json();
-                    console.log(data);
+
 
                     if (response.ok) {
                         const superUsuario = data.superUsuario;
 
 
                         // Verificando se o usuário existe
-                        const usuario = superUsuario.find(user => user.email === email && user.senha === senha);
+                        const usuario = superUsuario.find(usuario => usuario.email === email && usuario.senha === senha);
 
                         if (usuario) {
                             // Se o usuário for encontrado, redireciona para o estoque
                             window.location.href = "estoque.html";
-                            alert("Usuário logado com sucesso!");
                         } else {
                             // Se o usuário não for encontrado, exibe uma mensagem e redireciona para login
                             const errorMessage = document.getElementById('error-message');
