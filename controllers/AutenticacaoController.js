@@ -8,7 +8,7 @@ class AutenticacaoController {
     }
 
     async erro(req, res) {
-        res.sendFile("erro.html", { root: process.cwd() });
+        res.sendFile("/public/js/views/erro.html", { root: process.cwd() });
     }
 
     async home(req, res) {
