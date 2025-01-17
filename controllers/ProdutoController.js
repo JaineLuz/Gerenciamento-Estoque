@@ -59,60 +59,38 @@ class ProdutoController {
 
   // Método para atualizar um produto
   async update(req, res) {
-    const id = parseInt(req.params.id); // Converte o ID para inteiro, caso necessário
-    const { nome, descricao, valorUnitario, categoria, quantidade } = req.body;
+    const id = parseInt(req.params.id);
+    const { nome, descricao, quantidade, valorUnitario, categoria } = req.body;
 
     try {
-      // Busca o produto para verificar se ele existe
-      const produto = await ProdutoModel.findUnique({
-        where: { id }, // Use "id" ou o nome correto da chave primária no Prisma
-      });
-
-      if (!produto) {
-        return res.status(404).json({ message: 'Produto não encontrado' });
-      }
-
-      // Atualiza o produto com os novos dados
       const produtoAtualizado = await ProdutoModel.update({
-        where: { id },
-        data: { nome, descricao, valorUnitario, categoria, quantidade },
+        id,
+        nome,
+        descricao,
+        quantidade,
+        valorUnitario,
+        categoria,
       });
-
-      res.json(produtoAtualizado);
+      res.status(200).json(produtoAtualizado);
     } catch (error) {
-      console.error('Erro ao atualizar produto:', error);
-      res.status(500).json({ message: 'Erro ao atualizar produto', error: error.message });
+      console.error("Erro ao atualizar produto:", error.message);
+      res.status(500).json({ message: "Erro ao atualizar produto", error: error.message });
     }
   }
-
-
 
   // Método para excluir um produto
   async destroy(req, res) {
-    const id = parseInt(req.params.id); // Converte o ID para inteiro, caso necessário
+    const id = parseInt(req.params.id);
 
     try {
-      // Verifica se o produto existe
-      const produto = await ProdutoModel.findUnique({
-        where: { id }, // Use "id" ou o nome correto da chave primária no Prisma
-      });
-
-      if (!produto) {
-        return res.status(404).json({ message: 'Produto não encontrado' });
-      }
-
-      // Exclui o produto
-      await ProdutoModel.delete({
-        where: { id },
-      });
-
-      res.status(200).json({ message: 'Produto excluído com sucesso' });
+      await ProdutoModel.delete(id);
+      res.status(204).send(); // Retorna sucesso sem conteúdo
     } catch (error) {
-      console.error('Erro ao excluir produto:', error);
-      res.status(500).json({ message: 'Erro ao excluir produto', error: error.message });
+      console.error("Erro ao excluir produto:", error.message);
+      res.status(500).json({ message: "Erro ao excluir produto", error: error.message });
     }
   }
-}
+};
 
 
 export default new ProdutoController();

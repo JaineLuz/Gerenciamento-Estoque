@@ -1,10 +1,5 @@
-const button = document.getElementById('vendas');
+const button = document.getElementById('cadastrarUsuarios');
 button.addEventListener('click', () => {
-    window.location.href = 'public/js/views/vendas.html'; // Redireciona para a nova rota
-});
-
-const button2 = document.getElementById('cadastrarUsuarios');
-button2.addEventListener('click', () => {
     window.location.href = '/cadastrar'; // Redireciona para a nova rota
 });
 
@@ -48,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-let produtos = []; // Array para simular os dados do banco de dados
+let produtos = [];
 
 // Carregar produtos do backend e atualizar a tabela
 async function carregarProdutos() {
@@ -62,7 +57,7 @@ async function carregarProdutos() {
 
             // Atualiza a tabela na interface
             const tabela = document.getElementById('tabela-produtos');
-            tabela.innerHTML = ''; // Limpa a tabela antes de preenchê-la
+            tabela.innerHTML = '';
 
             produtos.forEach((produto, index) => {
                 tabela.innerHTML += `
@@ -96,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// Adicionar produto
+// Abrir modal para adicionar produto
 function abrirFormulario() {
     const modal = new bootstrap.Modal(document.getElementById('produtoModal'));
     document.getElementById('form-produto').reset();
@@ -117,6 +112,8 @@ document.getElementById('form-produto').addEventListener('submit', (e) => {
     const modal = bootstrap.Modal.getInstance(document.getElementById('produtoModal'));
     modal.hide();
 });
+
+
 // Editar produto
 function editarProduto(id) {
     // Encontra o produto pelo ID real
@@ -238,42 +235,6 @@ function editarProduto(id) {
 }
 
 
-// Função para listar produtos do banco de dados
-document.getElementById('listarProdutos').addEventListener('click', async () => {
-    try {
-        const response = await fetch('http://localhost:3000/produtos');
-        if (response.ok) {
-            const produtos = await response.json();
-
-            const tabelaProdutos = document.getElementById('tabela-produtos');
-            tabelaProdutos.innerHTML = ''; // Limpa a tabela atual
-
-            produtos.forEach((produto) => {
-                const row = `
-                <tr>
-                    <td>${produto.id}</td>
-                    <td>${produto.nome}</td>
-                    <td>${produto.descricao || '-'}</td>
-                    <td>${produto.categoria || '-'}</td>
-                    <td>${produto.quantidade}</td>
-                    <td>R$ ${(parseFloat(produto.valorUnitario) || 0).toFixed(2)}</td>
-                    <td>
-                        <button class="btn btn-sm btn-primary" onclick="editarProduto(${produto.id})">Editar</button>
-                        <button class="btn btn-sm btn-danger" onclick="excluirProduto(${produto.id})">Excluir</button>
-                    </td>
-                </tr>
-                `;
-                tabelaProdutos.insertAdjacentHTML('beforeend', row);
-            });
-        } else {
-            alert('Erro ao buscar produtos do servidor.');
-        }
-    } catch (error) {
-        console.error('Erro ao conectar ao servidor:', error);
-        alert('Erro ao conectar ao servidor. Tente novamente.');
-    }
-});
-
 // Função para excluir produto
 async function excluirProduto(id) {
     if (confirm('Tem certeza que deseja excluir este produto?')) {
@@ -297,9 +258,6 @@ async function excluirProduto(id) {
         }
     }
 }
-
-
-
 
 // Inicializar
 carregarProdutos();

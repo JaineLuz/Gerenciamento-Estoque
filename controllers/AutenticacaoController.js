@@ -13,7 +13,6 @@ class AutenticacaoController {
 
     async home(req, res) {
         res.sendFile("/public/js/views/estoque.html", { root: process.cwd() });
-
     }
 
     async login(req, res) {
@@ -32,8 +31,7 @@ class AutenticacaoController {
             return res.redirect("/erro");
         }
 
-        req.session.logado = true;
-        res.redirect("/estoque");
+        res.status(200).json({ auth: true })
     }
 }
 
